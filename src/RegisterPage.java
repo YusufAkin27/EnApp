@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 
 public class RegisterPage {
     private JFrame frame2;
+    private JFrame frame3;
     private JFrame frame;
     private JTextField nameAndSurnameField;
     private JTextField usernameField;
