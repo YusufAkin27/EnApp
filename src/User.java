@@ -13,6 +13,8 @@ public class User {
     private String password;
     private List<Word>library;
     private String level;
+    private String email;
+
 
     public String getNameAndSurname() {
         return nameAndSurname;
@@ -52,6 +54,14 @@ public class User {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     // User sınıfındaki levelUp metodu

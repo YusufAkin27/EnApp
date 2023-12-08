@@ -106,7 +106,7 @@ public class LoginPage {
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split("/");
 
-                if (userInfo.length > 3) {
+                if (userInfo.length > 4) {
                     String usernameFromFile = userInfo[1];
                     String passwordFromFile = userInfo[2];
 
@@ -133,13 +133,14 @@ public class LoginPage {
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split("/");
 
-                if (userInfo.length > 3) {
+                if (userInfo.length > 4) {
                     String usernameFromFile = userInfo[1];
                     if (enteredUsername.equals(usernameFromFile)) {
                         user.setNameAndSurname(userInfo[0]);
                         user.setUsername(userInfo[1]);
                         user.setPassword(userInfo[2]);
                         user.setLevel(userInfo[3]);
+                        user.setEmail(userInfo[4]);
                         return user;
                     }
                 }
