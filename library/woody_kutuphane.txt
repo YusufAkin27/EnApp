@@ -1,4 +1,0 @@
-okul,school
-glasses case,gözlük kutusu
-sayı,number
-radio,radyo

@@ -104,7 +104,7 @@ public class LoginPage {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
+                String[] userInfo = line.split("/");
 
                 if (userInfo.length > 3) {
                     String usernameFromFile = userInfo[1];
@@ -131,7 +131,7 @@ public class LoginPage {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
+                String[] userInfo = line.split("/");
 
                 if (userInfo.length > 3) {
                     String usernameFromFile = userInfo[1];

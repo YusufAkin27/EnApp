@@ -129,7 +129,7 @@ public class RegisterPage {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
+                String[] userInfo = line.split("/");
 
                 // userInfo dizisinin boyutunu kontrol et
                 if (userInfo.length > 1) {
@@ -164,7 +164,7 @@ public class RegisterPage {
         user.setUsername(username);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile(), true))) {
-            writer.write(user.getNameAndSurname() + "," + user.getUsername() + "," + user.getPassword() + "," + user.getLevel());
+            writer.write(user.getNameAndSurname() + "/" + user.getUsername() + "/" + user.getPassword() + "/" + user.getLevel());
             writer.newLine();
             displayResult("Kullanıcı bilgileri başarıyla kaydedildi.");
         } catch (IOException e) {

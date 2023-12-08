@@ -1,16 +1,15 @@
 import level.*;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public class QuizPage {
 
@@ -35,6 +34,7 @@ public class QuizPage {
     private int correctAnswers;
     private int incorrectAnswers;
     private boolean hasPassed;
+
 
     private Random random;
 
@@ -106,6 +106,7 @@ public class QuizPage {
     }
 
     private void startQuiz() {
+
         correctAnswers = 0;
         incorrectAnswers = 0;
         hasPassed = false;
