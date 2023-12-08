@@ -1,0 +1,88 @@
+package level;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class C1Words {
+    public static Map<String, String> getWords() {
+        Map<String, String> c1Words = new HashMap<>();
+        c1Words.put("acknowledge", "kabul etmek");
+        c1Words.put("acquire", "elde etmek");
+        c1Words.put( "edinim","acquisition");
+        c1Words.put("adequate", "yeterli");
+        c1Words.put("adjacent", "bitişik");
+        c1Words.put( "pay etmek","allocate");
+        c1Words.put("ally", "müttefik");
+        c1Words.put("antibody", "antikor");
+        c1Words.put("arch", "kemer");
+        c1Words.put("array", "bir dizi-sıra");
+        c1Words.put("artificial", "yapay");
+        c1Words.put("assess", "değerlendirmek");
+        c1Words.put("associate", "ilişkilendirmek");
+        c1Words.put( "denetlemek","audit");
+        c1Words.put("beam", "ışın");
+        c1Words.put("binary", "ikili");
+        c1Words.put("breach", "ihlal, çiğneme");
+        c1Words.put( "ele geçirmek","capture");
+        c1Words.put("cease", "durdurmak");
+        c1Words.put("chorus", "koro");
+        c1Words.put("cluster", "küme");
+        c1Words.put( "ticari mal","commodity");
+        c1Words.put("compensation", "tazminat");
+        c1Words.put("comply", "razı olmak");
+        c1Words.put( "içermek","comprise");
+        c1Words.put("confine", "sınırlamak");
+        c1Words.put("conflict", "çatışma");
+        c1Words.put("confront", "yüzleştirmek");
+        c1Words.put( "bağlaç","conjunction");
+        c1Words.put("consequence", "sonuç");
+        c1Words.put("consonant", "ünsüz");
+        c1Words.put( "sabit","constant");
+        c1Words.put("constitute", "oluşturmak");
+        c1Words.put("constraint", "baskı");
+        c1Words.put("context", "bağlam");
+        c1Words.put("contraction", "kasılma");
+        c1Words.put("contractor", "müteahhit");
+        c1Words.put( "konuşma","conversation");
+        c1Words.put("convey", "iletmek");
+        c1Words.put("crucial", "çok önemli");
+        c1Words.put("curb", "frenlemek");
+        c1Words.put( "eğim","curve");
+        c1Words.put("nemli","damp");
+        c1Words.put("debtor", "borçlu");
+        c1Words.put("sahneye ilk çıkış","debut");
+        c1Words.put("çürümek","decay");
+        c1Words.put("dedicate", "adamak");
+        c1Words.put("deficit", "eksiklik");
+        c1Words.put("deliberate", "kasten");
+        c1Words.put("depict", "betimlemek");
+        c1Words.put( "amortisman","depreciation");
+        c1Words.put("derivative", "türev");
+        c1Words.put("disapprove", "onaylamamak");
+        c1Words.put("discharge", "deşarj");
+        c1Words.put( "söylev","discourse");
+        c1Words.put("disposal", "imha etme");
+        c1Words.put("dispute", "tartışma");
+        c1Words.put( "eritmek","dissolve");
+        c1Words.put("distant", "uzak");
+        c1Words.put("distinct", "farklı");
+        c1Words.put("distinguish", "ayırt etmek");
+        c1Words.put( "ayrıntılı","elaborate");
+        c1Words.put("elect", "seçmek");
+        c1Words.put("embrace", "kucaklamak");
+        c1Words.put("emerge", "ortaya çıkmak");
+        c1Words.put( "karşılaşmak","encounter");
+        c1Words.put("equity", "tarafsızlık");
+        c1Words.put("equivalent", "eşdeğer");
+        c1Words.put("evolve", "gelişmek");
+        c1Words.put("exceed", "aşmak");
+        c1Words.put( "muafiyet","exemption");
+        c1Words.put("exploit", "sömürmek");
+        c1Words.put( "keşif","exploration");
+        c1Words.put("extract", "ayıklamak");
+        c1Words.put( "kesir","fraction");
+        c1Words.put("framework", "yapı");
+
+        return c1Words;
+    }
+}

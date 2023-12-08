@@ -1,0 +1,71 @@
+package level;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class B1Words {
+    public static Map<String, String> getWords() {
+        Map<String, String> b1Words = new HashMap<>();
+        b1Words.put("başarı", "success");
+        b1Words.put("hızlı", "fast");
+        b1Words.put("özgürlük", "freedom");
+        b1Words.put("development", "gelişim");
+        b1Words.put("havaalanı", "airport");
+        b1Words.put("fikir", "idea");
+        b1Words.put("doğa", "nature");
+        b1Words.put("reason", "sebep");
+        b1Words.put("strong", "güçlü");
+        b1Words.put("hak", "right");
+        b1Words.put("toplum", "society");
+        b1Words.put("eğitim", "education");
+        b1Words.put("anlamak", "understand");
+        b1Words.put("bağışlamak", "forgive");
+        b1Words.put("illness", "hastalık");
+        b1Words.put("sanat", "art");
+        b1Words.put("fırsat", "opportunity");
+        b1Words.put("öğrenmek", "learn");
+        b1Words.put("akıl", "mind");
+        b1Words.put("bağımsız", "independent");
+        b1Words.put("experience", "deneyim");
+        b1Words.put("sorun", "problem");
+        b1Words.put("future", "gelecek");
+        b1Words.put("uzay", "space");
+        b1Words.put("remember", "hatırlamak");
+        b1Words.put("hobi", "hobby");
+        b1Words.put("gülümsemek", "smile");
+        b1Words.put("yabancı", "foreign");
+        b1Words.put("uluslararası", "international");
+        b1Words.put("güven", "trust");
+        b1Words.put("hava", "weather");
+        b1Words.put("arkadaş", "friend");
+        b1Words.put("gıda", "food");
+        b1Words.put("öğrenci", "student");
+        b1Words.put("hüzün", "sadness");
+        b1Words.put("city", "şehir");
+        b1Words.put("dünya", "world");
+        b1Words.put("yıldız", "star");
+        b1Words.put("gürültü", "noise");
+        b1Words.put("sessizlik", "silence");
+        b1Words.put("culture", "kültür");
+        b1Words.put("luck", "şans");
+        b1Words.put("korku", "fear");
+        b1Words.put("mutluluk", "happiness");
+        b1Words.put("beauty", "güzellik");
+        b1Words.put("aile", "family");
+        b1Words.put("bilgi", "knowledge");
+        b1Words.put("zaman", "time");
+        b1Words.put("kıyafet", "clothing");
+        b1Words.put("health", "sağlık");
+        b1Words.put("bağlantı", "connection");
+        b1Words.put("beklemek", "wait");
+        b1Words.put("katılmak", "join");
+        b1Words.put("easy", "kolay");
+        b1Words.put("kalp", "heart");
+        b1Words.put("gezmek", "travel");
+        b1Words.put("improve", "gelişmek");
+        b1Words.put("küçük", "small");
+        b1Words.put("big", "büyük");
+
+        return b1Words;
+    }
+}

@@ -1,0 +1,4 @@
+araba,car
+ay,moon
+gözlük,glasses
+yüzme,swimming

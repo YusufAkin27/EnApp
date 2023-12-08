@@ -1,0 +1,9 @@
+kolye,necklace
+pillow,yastık
+gözlük temizleme spreyi,glasses cleaning spray
+tooth,diş
+film,movie
+video game,bilgisayar oyunu
+doğru,correct
+yürüyüş,walking
+internet,internet
