@@ -8,14 +8,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class LoginPage {
 
     private JFrame frame;
+
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton registerButton;
+    private JButton forgotPasswordButton; // Yeni eklendi
     private JLabel resultLabel;
 
     public LoginPage() {
@@ -36,7 +37,7 @@ public class LoginPage {
                 g2d.fillRect(0, 0, w, h);
             }
         };
-        panel.setLayout(new GridLayout(5, 1, 10, 10)); // 5 satır, 1 sütunlu bir GridLayout
+        panel.setLayout(new GridLayout(6, 1, 10, 10)); // 6 satır, 1 sütunlu bir GridLayout
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel mainLabel = new JLabel("Giriş Yap");
@@ -56,24 +57,11 @@ public class LoginPage {
         passwordField.setFont(new Font(fieldFont.getName(), Font.PLAIN, 16));
         panel.add(passwordField);
 
-        loginButton = new JButton("Kayıt Ol");
+        loginButton = new JButton("Giriş Yap");
         loginButton.setBackground(new Color(255, 165, 0)); // Turuncu renk
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new RegisterPage();
-            }
-
-        });
-        panel.add(loginButton);
-
-        registerButton = new JButton("Giriş Yap");
-        registerButton.setBackground(new Color(0, 128, 0)); // Yeşil renk
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
                 String enteredUsername = usernameField.getText();
                 String enteredPassword = new String(passwordField.getPassword());
 
@@ -85,9 +73,30 @@ public class LoginPage {
                     displayResult("Giriş başarısız. Kullanıcı adı veya şifre hatalı.");
                 }
             }
+        });
+        panel.add(loginButton);
 
+        registerButton = new JButton("Kayıt Ol");
+        registerButton.setBackground(new Color(0, 128, 0)); // Yeşil renk
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new RegisterPage();
+            }
         });
         panel.add(registerButton);
+
+        forgotPasswordButton = new JButton("Şifremi Unuttum"); // Yeni eklendi
+        forgotPasswordButton.setForeground(new Color(0, 0, 255)); // Mavi renk
+        forgotPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new ForgotPasswordPage();
+            }
+        });
+        panel.add(forgotPasswordButton);
 
         resultLabel = new JLabel();
         resultLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -98,15 +107,23 @@ public class LoginPage {
         frame.setLocationRelativeTo(null);
     }
 
+    private void showForgotPasswordPage() {
+        // Burada şifre sıfırlama sayfasının tasarımı ve mantığı oluşturulabilir.
+        // Örneğin, yeni bir pencere açabilir veya mevcut pencere içinde panel değiştirebilirsiniz.
+        // Aşağıda sadece bir mesaj gösterimi bulunmaktadır.
+
+        JOptionPane.showMessageDialog(frame, "Şifrenizi sıfırlamak için sistem yöneticinize başvurun.", "Şifre Sıfırlama", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private boolean checkCredentials(String enteredUsername, String enteredPassword) {
         Path filePath = Paths.get("kullanici_bilgileri.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split("/");
+                String[] userInfo = line.split(",");
 
-                if (userInfo.length > 4) {
+                if (userInfo.length > 3) {
                     String usernameFromFile = userInfo[1];
                     String passwordFromFile = userInfo[2];
 
@@ -133,7 +150,7 @@ public class LoginPage {
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split("/");
 
-                if (userInfo.length > 4) {
+                if (userInfo.length > 3) {
                     String usernameFromFile = userInfo[1];
                     if (enteredUsername.equals(usernameFromFile)) {
                         user.setNameAndSurname(userInfo[0]);

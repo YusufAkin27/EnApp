@@ -95,10 +95,11 @@ public class EditProfilePage {
                 if (userInfo.length >= 4 && user.getUsername().equals(userInfo[1])) {
                     // Kullanıcı adı eşleşti, güncellenmiş bilgilerle satırı oluştur
                     StringBuilder updatedLine = new StringBuilder();
-                    updatedLine.append(user.getNameAndSurname()).append(",")
-                            .append(user.getUsername()).append(",")
-                            .append(user.getPassword()).append(",")
-                            .append(user.getLevel());
+                    updatedLine.append(user.getNameAndSurname()).append("/")
+                            .append(user.getUsername()).append("/")
+                            .append(user.getPassword()).append("/")
+                            .append(user.getLevel()).append("/")
+                            .append(user.getEmail());
                     updatedLines.add(updatedLine.toString());
                 } else {
                     // Kullanıcı adı eşleşmiyorsa, satırı değiştirmeden listeye ekle
