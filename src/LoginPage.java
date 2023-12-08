@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 
 public class LoginPage {
-
+    private JFrame frame2;
     private JFrame frame;
     private JTextField usernameField;
     private JPasswordField passwordField;
