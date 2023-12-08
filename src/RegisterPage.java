@@ -86,10 +86,15 @@ public class RegisterPage {
                 if (!isUsernameTaken(username)) {
                     // Şifre kontrolü
                     if (isPasswordValid(password)) {
-                        // Kullanıcı adı kullanılmamışsa ve şifre uygunsa, verileri metin belgesine kaydet
-                        saveUserToTextFile(nameAndSurname, username, password);
-                        createUserLibraryFile(username); // Her kullanıcı için bir kelime kütüphanesi dosyası oluştur
-                        displayResult("Kayıt işlemi başarılı.");
+                        // Kullanıcı adı kontrolü
+                        if (isUsernameValid(username)) {
+                            // Kullanıcı adı kullanılmamışsa ve şifre uygunsa, verileri metin belgesine kaydet
+                            saveUserToTextFile(nameAndSurname, username, password);
+                            createUserLibraryFile(username); // Her kullanıcı için bir kelime kütüphanesi dosyası oluştur
+                            displayResult("Kayıt işlemi başarılı.");
+                        } else {
+                            displayResult("Kullanıcı adı kurallarına uyunuz: En az 4 karakter uzunluğunda olmalı, sadece harf, rakam ve alt çizgi içermelidir, harf veya rakam ile başlamalıdır.");
+                        }
                     } else {
                         displayResult("Şifre kurallarına uyunuz: En az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir sayı içermelidir.");
                     }
@@ -147,6 +152,13 @@ public class RegisterPage {
         }
 
         return false; // Kullanıcı adı kullanılmamış
+    }
+
+    private boolean isUsernameValid(String username) {
+        // Kullanıcı adı en az 4 karakter uzunluğunda olmalıdır.
+        // Sadece harf, rakam ve alt çizgi (_) karakterleri içermelidir.
+        // Harf veya rakam ile başlamalıdır.
+        return username.length() >= 4 && username.matches("[a-zA-Z0-9_]+") && Character.isLetterOrDigit(username.charAt(0));
     }
 
     private boolean isPasswordValid(String password) {
