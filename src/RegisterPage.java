@@ -43,45 +43,55 @@ public class RegisterPage {
         JLabel mainLabel = new JLabel("KAYIT OL");
         mainLabel.setForeground(Color.BLACK);
         Font labelFont = mainLabel.getFont();
-        mainLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, 21));
-        mainLabel.setBounds(250, 20, 100, 220);
+        mainLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 24));
+        mainLabel.setBounds(250, 20, 150, 30);
         panel.add(mainLabel);
 
         JLabel nameLabel = new JLabel("Ad Soyad:");
         nameLabel.setForeground(Color.RED);
-        nameLabel.setBounds(120, 240, 100, 30);
+        Font nameFont = new Font("SansSerif", Font.PLAIN, 16); // Farklı bir değişken adı kullan
+        nameLabel.setFont(nameFont);
+        nameLabel.setBounds(120, 80, 100, 30);
         panel.add(nameLabel);
 
         nameAndSurnameField = new JTextField();
-        nameAndSurnameField.setBounds(200, 240, 200, 30);
+        nameAndSurnameField.setBounds(220, 80, 300, 30);
         panel.add(nameAndSurnameField);
 
         JLabel usernameLabel = new JLabel("Kullanıcı Adı:");
         usernameLabel.setForeground(Color.RED);
-        usernameLabel.setBounds(120, 280, 100, 30);
+        Font usernameFont = new Font("SansSerif", Font.PLAIN, 16); // Farklı bir değişken adı kullan
+        usernameLabel.setFont(usernameFont);
+        usernameLabel.setBounds(120, 120, 100, 30);
         panel.add(usernameLabel);
 
         usernameField = new JTextField();
-        usernameField.setBounds(200, 280, 200, 30);
+        usernameField.setBounds(220, 120, 300, 30);
         panel.add(usernameField);
 
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setForeground(Color.RED);
-        emailLabel.setBounds(120, 320, 100, 30);
+        Font emailFont = new Font("SansSerif", Font.PLAIN, 16); // Farklı bir değişken adı kullan
+        emailLabel.setFont(emailFont);
+        emailLabel.setBounds(120, 160, 100, 30);
         panel.add(emailLabel);
 
         emailField = new JTextField();
-        emailField.setBounds(200, 320, 200, 30);
+        emailField.setBounds(220, 160, 300, 30);
         panel.add(emailField);
 
         JLabel passwordLabel = new JLabel("Şifre:");
         passwordLabel.setForeground(Color.RED);
-        passwordLabel.setBounds(120, 360, 100, 30);
+        Font passwordFont = new Font("SansSerif", Font.PLAIN, 16); // Farklı bir değişken adı kullan
+        passwordLabel.setFont(passwordFont);
+        passwordLabel.setBounds(120, 200, 100, 30);
         panel.add(passwordLabel);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(200, 360, 200, 30);
+        passwordField.setBounds(220, 200, 300, 30);
         panel.add(passwordField);
+
+
 
         registerButton = new JButton("Kayıt Ol");
         registerButton.setBackground(Color.GREEN);
@@ -117,7 +127,7 @@ public class RegisterPage {
                 }
             }
         });
-        registerButton.setBounds(200, 400, 100, 30);
+        registerButton.setBounds(220, 240, 150, 40);
         panel.add(registerButton);
 
         loginButton = new JButton("Giriş Yap");
@@ -129,11 +139,11 @@ public class RegisterPage {
                 new LoginPage();
             }
         });
-        loginButton.setBounds(320, 400, 100, 30);
+        loginButton.setBounds(380, 240, 150, 40);
         panel.add(loginButton);
 
         resultLabel = new JLabel();
-        resultLabel.setBounds(200, 440, 300, 30);
+        resultLabel.setBounds(220, 300, 300, 30);
         panel.add(resultLabel);
 
         frame.add(panel);

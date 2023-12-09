@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ForgotPasswordPage {
 
@@ -21,55 +19,78 @@ public class ForgotPasswordPage {
         frame.setSize(400, 300);
         frame.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 2, 10, 10));
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int w = getWidth();
+                int h = getHeight();
+                GradientPaint gp = new GradientPaint(0, 0, new Color(70, 130, 180), 0, h, new Color(255, 255, 255));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, w, h);
+            }
+        };
+        panel.setLayout(new GridLayout(5, 2, 10, 10)); // Satır sayısını 5'e çıkardık
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel usernameLabel = new JLabel("Kullanıcı Adı:");
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Metin boyutunu büyüttük
         panel.add(usernameLabel);
 
         usernameField = new JTextField();
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 14)); // Metin boyutunu büyüttük
         panel.add(usernameField);
 
         JLabel emailLabel = new JLabel("E-posta:");
+        emailLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Metin boyutunu büyüttük
         panel.add(emailLabel);
 
         emailField = new JTextField();
+        emailField.setFont(new Font("Arial", Font.PLAIN, 14)); // Metin boyutunu büyüttük
         panel.add(emailField);
 
         JLabel newPasswordLabel = new JLabel("Yeni Şifre:");
+        newPasswordLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Metin boyutunu büyüttük
         panel.add(newPasswordLabel);
 
         newPasswordField = new JPasswordField();
+        newPasswordField.setFont(new Font("Arial", Font.PLAIN, 14)); // Metin boyutunu büyüttük
         panel.add(newPasswordField);
-
-        resetPasswordButton = new JButton("Şifreyi Sıfırla");
-        resetPasswordButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String enteredUsername = usernameField.getText();
-                String enteredEmail = emailField.getText();
-                String newPassword = new String(newPasswordField.getPassword());
-
-                if (resetPassword(enteredUsername, enteredEmail, newPassword)) {
-                    JOptionPane.showMessageDialog(frame, "Şifre sıfırlama başarılı.", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose(); // Şifre sıfırlama penceresini kapat
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Kullanıcı adı veya e-posta hatalı.", "Hata", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        panel.add(resetPasswordButton);
 
         backButton = new JButton("Giriş Sayfasına Dön");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new LoginPage();
+                SwingUtilities.invokeLater(() -> new LoginPage());
             }
         });
         panel.add(backButton);
+
+        resetPasswordButton = new JButton("Şifreyi Sıfırla");
+        resetPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Boş alan kontrolü
+                if (usernameField.getText().isEmpty() || emailField.getText().isEmpty() || new String(newPasswordField.getPassword()).isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Lütfen tüm alanları doldurun.", "Uyarı", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String enteredUsername = usernameField.getText();
+                    String enteredEmail = emailField.getText();
+                    String newPassword = new String(newPasswordField.getPassword());
+
+                    if (resetPassword(enteredUsername, enteredEmail, newPassword)) {
+                        JOptionPane.showMessageDialog(frame, "Şifre sıfırlama başarılı.", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                        SwingUtilities.invokeLater(() -> new LoginPage());
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Kullanıcı adı veya e-posta hatalı veya böyle bir kullanıcı bulunamadı.", "Hata", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        panel.add(resetPasswordButton);
 
         frame.add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
@@ -77,42 +98,47 @@ public class ForgotPasswordPage {
     }
 
     private boolean resetPassword(String enteredUsername, String enteredEmail, String newPassword) {
-        Path filePath = Paths.get("kullanici_bilgileri.txt");
+        try {
+            String dosyaYolu = "kullanici_bilgileri.txt";
+            File dosya = new File(dosyaYolu);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("temp.txt"))) {
+            BufferedReader br = new BufferedReader(new FileReader(dosya));
+            String satir;
+            StringBuilder yeniIcerik = new StringBuilder();
+            boolean kullaniciBulundu = false;
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split("/");
+            while ((satir = br.readLine()) != null) {
+                String[] bilgiler = satir.split("/");
 
-                if (userInfo.length > 4) {
-                    String usernameFromFile = userInfo[1].trim();
-                    String emailFromFile = userInfo[4].trim();
-
-                    if (enteredUsername.equals(usernameFromFile) && enteredEmail.equals(emailFromFile)) {
-                        // Kullanıcı adı ve e-posta doğrulandı, yeni şifreyi güncelle
-                        userInfo[2] = newPassword;
+                if (bilgiler.length >= 5 && bilgiler[1].equals(enteredUsername) && bilgiler[4].equals(enteredEmail)) {
+                    kullaniciBulundu = true;
+                    if (isPasswordValid(newPassword)) {
+                        bilgiler[2] = newPassword;
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir sayı içermelidir.", "Şifre Hatası", JOptionPane.ERROR_MESSAGE);
+                        return false;
                     }
                 }
 
-                // Dosyaya satırı yaz
-                writer.write(String.join("/", userInfo));
-                writer.newLine();
+                yeniIcerik.append(String.join("/", bilgiler)).append("\n");
             }
 
+            br.close();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(dosya));
+            bw.write(yeniIcerik.toString());
+            bw.close();
+
+            return kullaniciBulundu;
         } catch (IOException e) {
-            System.err.println("Dosya işlemleri hatası: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
-
-        // Dosya isimlerini değiştirerek güncellenmiş dosyayı orijinal adıyla değiştir
-        File oldFile = new File("temp.txt");
-        File newFile = new File("kullanici_bilgileri.txt");
-        return oldFile.renameTo(newFile);
     }
 
-    public static void main(String[] args) {
-        new ForgotPasswordPage();
+    private boolean isPasswordValid(String password) {
+        return password.length() >= 8 && password.matches(".*[A-Z]+.*") && password.matches(".*\\d+.*");
     }
+
+
 }
