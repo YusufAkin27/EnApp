@@ -110,10 +110,10 @@ public class ForgotPasswordPage {
             while ((satir = br.readLine()) != null) {
                 String[] bilgiler = satir.split("/");
 
-                if (bilgiler.length >= 5 && bilgiler[1].equals(enteredUsername) && bilgiler[4].equals(enteredEmail)) {
+                if (bilgiler.length >= 6 && bilgiler[2].equals(enteredUsername) && bilgiler[5].equals(enteredEmail)) {
                     kullaniciBulundu = true;
                     if (isPasswordValid(newPassword)) {
-                        bilgiler[2] = newPassword;
+                        bilgiler[3] = newPassword;
                     } else {
                         JOptionPane.showMessageDialog(frame, "Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir sayı içermelidir.", "Şifre Hatası", JOptionPane.ERROR_MESSAGE);
                         return false;

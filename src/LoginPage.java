@@ -121,11 +121,11 @@ public class LoginPage {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
+                String[] userInfo = line.split("/");
 
                 if (userInfo.length > 3) {
-                    String usernameFromFile = userInfo[1];
-                    String passwordFromFile = userInfo[2];
+                    String usernameFromFile = userInfo[2];
+                    String passwordFromFile = userInfo[3];
 
                     if (enteredUsername.equals(usernameFromFile) && enteredPassword.equals(passwordFromFile)) {
                         displayResult("Giriş başarılı. Hoş geldiniz, " + enteredUsername + "!");
@@ -151,13 +151,14 @@ public class LoginPage {
                 String[] userInfo = line.split("/");
 
                 if (userInfo.length > 3) {
-                    String usernameFromFile = userInfo[1];
+                    String usernameFromFile = userInfo[2];
                     if (enteredUsername.equals(usernameFromFile)) {
-                        user.setNameAndSurname(userInfo[0]);
-                        user.setUsername(userInfo[1]);
-                        user.setPassword(userInfo[2]);
-                        user.setLevel(userInfo[3]);
-                        user.setEmail(userInfo[4]);
+                        user.setId(Long.parseLong(userInfo[0]));
+                        user.setNameAndSurname(userInfo[1]);
+                        user.setUsername(userInfo[2]);
+                        user.setPassword(userInfo[3]);
+                        user.setLevel(userInfo[4]);
+                        user.setEmail(userInfo[5]);
                         return user;
                     }
                 }

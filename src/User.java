@@ -8,13 +8,24 @@ import java.util.List;
 
 public class User {
 
+
+    private long id;
+
     private String nameAndSurname;
     private String username;
     private String password;
-    private List<Word>library;
+    private List<Word> library;
     private String level;
     private String email;
 
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNameAndSurname() {
         return nameAndSurname;
@@ -158,7 +169,6 @@ public class User {
             System.err.println("Dosya yazma hatası: " + e.getMessage());
         }
     }
-
 
 
 }
