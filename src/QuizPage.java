@@ -20,6 +20,7 @@ public class QuizPage {
     private JLabel questionLabel;
     private JTextField answerField;
     private JLabel statusLabel;
+    private JLabel timeLabel;
 
     private A1Words a1Words;
     private A2Words a2Words;
@@ -35,12 +36,14 @@ public class QuizPage {
     private int incorrectAnswers;
     private boolean hasPassed;
 
-
     private Random random;
 
     private User user;
 
     private List<String> askedWords;
+
+    private Timer questionTimer;
+    private int remainingTimeInSeconds;
 
     public QuizPage(User user) {
         this.user = user;
@@ -88,12 +91,26 @@ public class QuizPage {
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(statusLabel);
 
+        timeLabel = new JLabel(); // Eklenen yeni etiket
+        timeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(timeLabel);
+
         frame.add(panel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
         random = new Random();
         askedWords = new ArrayList<>();
+
+        remainingTimeInSeconds = 10;
+        questionTimer = new Timer(1000, e -> {
+            remainingTimeInSeconds--;
+            if (remainingTimeInSeconds <= 0) {
+                handleTimeout();
+            }
+            updateStatusLabel(); // Zaman her azaldığında etiketi güncelle
+        });
     }
 
     private void initializeWords() {
@@ -106,7 +123,6 @@ public class QuizPage {
     }
 
     private void startQuiz() {
-
         correctAnswers = 0;
         incorrectAnswers = 0;
         hasPassed = false;
@@ -116,6 +132,7 @@ public class QuizPage {
         panel.remove(startQuizButton);
         frame.revalidate();
         frame.repaint();
+        startQuestionTimer(); // Timer'ı başlatma işlemi burada olmalı
     }
 
     private void askQuestion() {
@@ -134,6 +151,9 @@ public class QuizPage {
             statusLabel.setText("Seviye: " + currentLevel + " | Doğru: " + correctAnswers + " | Yanlış: " + incorrectAnswers);
             panel.setBackground(null);
             hasPassed = false;
+            resetQuestionTimer();
+            startQuestionTimer();
+            updateStatusLabel(); // Eklenen yeni satır
         } else {
             endQuiz(currentLevel);
         }
@@ -244,6 +264,8 @@ public class QuizPage {
             incorrectAnswers++;
         }
 
+        stopQuestionTimer();
+        resetQuestionTimer();
         askQuestion();
     }
 
@@ -276,8 +298,37 @@ public class QuizPage {
     }
 
     private void exitQuiz() {
+        stopQuestionTimer();
         user.updateUser(user);
         frame.dispose();
         new MainPage(user);
+    }
+
+    private void startQuestionTimer() {
+        questionTimer.start();
+        updateStatusLabel();
+    }
+
+    private void stopQuestionTimer() {
+        questionTimer.stop();
+        updateStatusLabel();
+    }
+
+    private void resetQuestionTimer() {
+        remainingTimeInSeconds = 10;
+        updateStatusLabel();
+    }
+
+    private void handleTimeout() {
+        showFeedback("Zaman doldu! Yanlış cevap. Doğru cevap: " + correctAnswer, Color.RED);
+        addToLibrary(currentWord, correctAnswer, user);
+        incorrectAnswers++;
+        stopQuestionTimer();
+        resetQuestionTimer();
+        askQuestion();
+    }
+
+    private void updateStatusLabel() {
+        timeLabel.setText("Kalan Süre: " + remainingTimeInSeconds + " saniye");
     }
 }
