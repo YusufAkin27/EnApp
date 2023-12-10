@@ -203,7 +203,7 @@ public class RegisterPage {
         Path dosyaYolu = Paths.get("kullanici_bilgileri.txt");
 
         try (BufferedWriter yazici = new BufferedWriter(new FileWriter(dosyaYolu.toFile(), true))) {
-            yazici.write(this.id + "/" + this.nameAndSurname + "/" + this.username + "/" + this.password + "/" + this.level + "/" + this.email);
+            yazici.write(this.id + "/" + this.nameAndSurname + "/" + this.username + "/" + this.password + "/" + this.level + "/" + this.email+"/"+"null");
             yazici.newLine();
             sonucuGoster("Kullanıcı bilgileri başarıyla kaydedildi.");
         } catch (IOException e) {
@@ -212,11 +212,15 @@ public class RegisterPage {
     }
 
     private int generateId() {
-        synchronized (RegisterPage.class) {
-            return ++idCounter;
+        try (BufferedReader okuyucu = new BufferedReader(new FileReader("kullanici_bilgileri.txt"))) {
+            // Dosyadaki satır sayısını hesapla
+            long userCount = okuyucu.lines().count();
+            idCounter = (int) userCount;
+        } catch (IOException e) {
+            System.err.println("Dosya okuma hatası: " + e.getMessage());
         }
+        return ++idCounter;
     }
-
     private void createUserLibraryFile(String kullaniciAdi) {
         Path kutuphaneKlasorYolu = Paths.get("library");
 
