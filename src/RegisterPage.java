@@ -8,14 +8,24 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class RegisterPage {
-//gönderdim
+
+    private static int idCounter = 0;
+
+    private int id;
+    private String nameAndSurname;
+    private String username;
+    private String password;
+    private String level;
+    private String email;
+
     private JFrame frame;
-    private JTextField nameAndSurnameField;
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton registerButton;
-    private JButton loginButton;
-    private JLabel resultLabel;
+    private JTextField adSoyadField;
+    private JTextField kullaniciAdiField;
+    private JTextField emailField;
+    private JPasswordField sifreField;
+    private JButton kayitButton;
+    private JButton girisButton;
+    private JLabel sonucEtiketi;
 
     public RegisterPage() {
         frame = new JFrame("Kayıt Formu");
@@ -39,170 +49,195 @@ public class RegisterPage {
         panel.setLayout(null);
         panel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 
-        JLabel mainLabel = new JLabel("KAYIT OL");
-        mainLabel.setForeground(Color.BLACK);
-        Font labelFont = mainLabel.getFont();
-        mainLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, 21));
-        mainLabel.setBounds(250, 20, 100, 220);
-        panel.add(mainLabel);
+        JLabel baslikEtiketi = new JLabel("KAYIT OL");
+        baslikEtiketi.setForeground(Color.BLACK);
+        Font etiketFontu = baslikEtiketi.getFont();
+        baslikEtiketi.setFont(new Font(etiketFontu.getName(), Font.BOLD, 24));
+        baslikEtiketi.setBounds(250, 20, 150, 30);
+        panel.add(baslikEtiketi);
 
-        JLabel nameLabel = new JLabel("Ad Soyad:");
-        nameLabel.setForeground(Color.RED);
-        nameLabel.setBounds(120, 240, 100, 30);
-        panel.add(nameLabel);
+        JLabel adSoyadEtiketi = new JLabel("Ad Soyad:");
+        adSoyadEtiketi.setForeground(Color.RED);
+        Font adSoyadFontu = new Font("SansSerif", Font.PLAIN, 16);
+        adSoyadEtiketi.setFont(adSoyadFontu);
+        adSoyadEtiketi.setBounds(120, 80, 100, 30);
+        panel.add(adSoyadEtiketi);
 
-        nameAndSurnameField = new JTextField();
-        nameAndSurnameField.setBounds(200, 240, 200, 30);
-        panel.add(nameAndSurnameField);
+        adSoyadField = new JTextField();
+        adSoyadField.setBounds(220, 80, 300, 30);
+        adSoyadField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        panel.add(adSoyadField);
 
-        JLabel usernameLabel = new JLabel("Kullanıcı Adı:");
-        usernameLabel.setForeground(Color.RED);
-        usernameLabel.setBounds(120, 280, 100, 30);
-        panel.add(usernameLabel);
+        JLabel kullaniciAdiEtiketi = new JLabel("Kullanıcı Adı:");
+        kullaniciAdiEtiketi.setForeground(Color.RED);
+        Font kullaniciAdiFontu = new Font("SansSerif", Font.PLAIN, 16);
+        kullaniciAdiEtiketi.setFont(kullaniciAdiFontu);
+        kullaniciAdiEtiketi.setBounds(120, 120, 100, 30);
+        panel.add(kullaniciAdiEtiketi);
 
-        usernameField = new JTextField();
-        usernameField.setBounds(200, 280, 200, 30);
-        panel.add(usernameField);
+        kullaniciAdiField = new JTextField();
+        kullaniciAdiField.setBounds(220, 120, 300, 30);
+        kullaniciAdiField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        panel.add(kullaniciAdiField);
 
-        JLabel passwordLabel = new JLabel("Şifre:");
-        passwordLabel.setForeground(Color.RED);
-        passwordLabel.setBounds(120, 320, 100, 30);
-        panel.add(passwordLabel);
+        JLabel emailEtiketi = new JLabel("Email:");
+        emailEtiketi.setForeground(Color.RED);
+        Font emailFontu = new Font("SansSerif", Font.PLAIN, 16);
+        emailEtiketi.setFont(emailFontu);
+        emailEtiketi.setBounds(120, 160, 100, 30);
+        panel.add(emailEtiketi);
 
-        passwordField = new JPasswordField();
-        passwordField.setBounds(200, 320, 200, 30);
-        panel.add(passwordField);
+        emailField = new JTextField();
+        emailField.setBounds(220, 160, 300, 30);
+        emailField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        panel.add(emailField);
 
-        registerButton = new JButton("Kayıt Ol");
-        registerButton.setBackground(Color.GREEN);
-        registerButton.addActionListener(new ActionListener() {
+        JLabel sifreEtiketi = new JLabel("Şifre:");
+        sifreEtiketi.setForeground(Color.RED);
+        Font sifreFontu = new Font("SansSerif", Font.PLAIN, 16);
+        sifreEtiketi.setFont(sifreFontu);
+        sifreEtiketi.setBounds(120, 200, 100, 30);
+        panel.add(sifreEtiketi);
+
+        sifreField = new JPasswordField();
+        sifreField.setBounds(220, 200, 300, 30);
+        sifreField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        panel.add(sifreField);
+
+        kayitButton = new JButton("Kayıt Ol");
+        kayitButton.setBackground(Color.GREEN);
+        kayitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameAndSurname = nameAndSurnameField.getText();
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
+                String adSoyad = adSoyadField.getText();
+                String kullaniciAdi = kullaniciAdiField.getText();
+                String sifre = new String(sifreField.getPassword());
+                String email = emailField.getText();
 
-                // Kullanıcı adının daha önce kullanılıp kullanılmadığını kontrol et
-                if (!isUsernameTaken(username)) {
-                    // Şifre kontrolü
-                    if (isPasswordValid(password)) {
-                        // Kullanıcı adı kontrolü
-                        if (isUsernameValid(username)) {
-                            // Kullanıcı adı kullanılmamışsa ve şifre uygunsa, verileri metin belgesine kaydet
-                            saveUserToTextFile(nameAndSurname, username, password);
-                            createUserLibraryFile(username); // Her kullanıcı için bir kelime kütüphanesi dosyası oluştur
-                            displayResult("Kayıt işlemi başarılı.");
+                if (!isUniqueTaken(kullaniciAdi, email)) {
+                    if (isEmailValid(email) && isPasswordValid(sifre)) {
+                        if (isUsernameValid(kullaniciAdi)) {
+                            saveUserToTextFile(adSoyad, kullaniciAdi, sifre, email);
+                            createUserLibraryFile(kullaniciAdi);
+                            sonucuGoster("Kayıt işlemi başarılı.");
                         } else {
-                            displayResult("Kullanıcı adı kurallarına uyunuz: En az 4 karakter uzunluğunda olmalı, sadece harf, rakam ve alt çizgi içermelidir, harf veya rakam ile başlamalıdır.");
+                            sonucuGoster("Kullanıcı adı kurallarına uyunuz: En az 4 karakter uzunluğunda olmalı, sadece harf, rakam ve alt çizgi içermelidir, harf veya rakam ile başlamalıdır.");
                         }
                     } else {
-                        displayResult("Şifre kurallarına uyunuz: En az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir sayı içermelidir.");
+                        sonucuGoster("Geçersiz email adresi veya şifre. Lütfen kontrol edip tekrar deneyin.");
                     }
                 } else {
-                    // Kullanıcı adı daha önce kullanılmışsa, kullanıcıya bilgi ver
-                    displayResult("Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı seçin.");
+                    sonucuGoster("Bu kullanıcı adı veya email zaten alınmış.");
                 }
             }
         });
-        registerButton.setBounds(200, 380, 100, 30);
-        panel.add(registerButton);
+        kayitButton.setBounds(220, 240, 150, 40);
+        panel.add(kayitButton);
 
-        loginButton = new JButton("Giriş Yap");
-        loginButton.setBackground(Color.ORANGE);
-        loginButton.addActionListener(new ActionListener() {
+        girisButton = new JButton("Giriş Yap");
+        girisButton.setBackground(Color.ORANGE);
+        girisButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 new LoginPage();
             }
         });
-        loginButton.setBounds(320, 380, 100, 30);
-        panel.add(loginButton);
+        girisButton.setBounds(380, 240, 150, 40);
+        panel.add(girisButton);
 
-        resultLabel = new JLabel();
-        resultLabel.setBounds(200, 420, 300, 30);
-        panel.add(resultLabel);
+        sonucEtiketi = new JLabel();
+        sonucEtiketi.setBounds(220, 300, 300, 30);
+        panel.add(sonucEtiketi);
 
         frame.add(panel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
 
-    private boolean isUsernameTaken(String username) {
-        Path filePath = Paths.get("kullanici_bilgileri.txt");
+    private boolean isUniqueTaken(String kullaniciAdi, String email) {
+        Path dosyaYolu = Paths.get("kullanici_bilgileri.txt");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split("/");
+        try (BufferedReader okuyucu = new BufferedReader(new FileReader(dosyaYolu.toFile()))) {
+            String satir;
+            while ((satir = okuyucu.readLine()) != null) {
+                String[] kullaniciBilgisi = satir.split("/");
 
-                // userInfo dizisinin boyutunu kontrol et
-                if (userInfo.length > 1) {
-                    String usernameFromFile = userInfo[1]; // Kullanıcı adı dosyada ikinci sırada
-
-                    if (username.equals(usernameFromFile)) {
-                        return true; // Kullanıcı adı daha önce kullanılmış
+                if (kullaniciBilgisi.length > 1) {
+                    String kullaniciAdiDosyadan = kullaniciBilgisi[2]; // Kullanıcı adı dosyada üçüncü sırada
+                    String emailDosyadan = kullaniciBilgisi[4];
+                    if (kullaniciAdi.equals(kullaniciAdiDosyadan) || email.equals(emailDosyadan)) {
+                        return true; // Kullanıcı adı veya email daha önce kullanılmış
                     }
                 } else {
-                    System.err.println("Dosyada geçersiz bir satır bulundu: " + line);
+                    System.err.println("Dosyada geçersiz bir satır bulundu: " + satir);
                 }
             }
         } catch (IOException e) {
             System.err.println("Dosya okuma hatası: " + e.getMessage());
         }
 
-        return false; // Kullanıcı adı kullanılmamış
+        return false; // Kullanıcı adı veya email kullanılmamış
     }
 
-    private boolean isUsernameValid(String username) {
-        // Kullanıcı adı en az 4 karakter uzunluğunda olmalıdır.
-        // Sadece harf, rakam ve alt çizgi (_) karakterleri içermelidir.
-        // Harf veya rakam ile başlamalıdır.
-        return username.length() >= 4 && username.matches("[a-zA-Z0-9_]+") && Character.isLetterOrDigit(username.charAt(0));
+    private boolean isUsernameValid(String kullaniciAdi) {
+        return kullaniciAdi.length() >= 4 && kullaniciAdi.matches("[a-zA-Z0-9_]+") && Character.isLetterOrDigit(kullaniciAdi.charAt(0));
     }
 
-    private boolean isPasswordValid(String password) {
-        // Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir sayı içermelidir.
-        return password.length() >= 8 && password.matches(".*[A-Z]+.*") && password.matches(".*\\d+.*");
+    private boolean isEmailValid(String email) {
+        return email.matches("^[\\w-]+(\\.[\\w-]+)*@[\\w]+(\\.[\\w]+)*(\\.[a-z]{2,})$");
     }
 
-    private void saveUserToTextFile(String nameAndSurname, String username, String password) {
-        User user = new User();
-        Path filePath = Paths.get("kullanici_bilgileri.txt");
-        user.setLevel("A1");
-        user.setLibrary(null);
-        user.setPassword(password);
-        user.setNameAndSurname(nameAndSurname);
-        user.setUsername(username);
+    private boolean isPasswordValid(String sifre) {
+        return sifre.length() >= 8 && sifre.matches(".*[A-Z]+.*") && sifre.matches(".*\\d+.*");
+    }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile(), true))) {
-            writer.write(user.getNameAndSurname() + "/" + user.getUsername() + "/" + user.getPassword() + "/" + user.getLevel());
-            writer.newLine();
-            displayResult("Kullanıcı bilgileri başarıyla kaydedildi.");
+    private void saveUserToTextFile(String adSoyad, String kullaniciAdi, String sifre, String email) {
+        this.id = generateId();
+        this.nameAndSurname = adSoyad;
+        this.username = kullaniciAdi;
+        this.password = sifre;
+        this.level = "A1";
+        this.email = email;
+
+        Path dosyaYolu = Paths.get("kullanici_bilgileri.txt");
+
+        try (BufferedWriter yazici = new BufferedWriter(new FileWriter(dosyaYolu.toFile(), true))) {
+            yazici.write(this.id + "/" + this.nameAndSurname + "/" + this.username + "/" + this.password + "/" + this.level + "/" + this.email+"/"+"2022-12-11 08:27:49");
+            yazici.newLine();
+            sonucuGoster("Kullanıcı bilgileri başarıyla kaydedildi.");
         } catch (IOException e) {
             System.err.println("Kullanıcı bilgilerini dosyaya kaydederken bir hata oluştu: " + e.getMessage());
         }
     }
 
-    private void createUserLibraryFile(String username) {
-        // Kullanıcının kelime kütüphanesi dosyasını oluştur
-        Path libraryFolderPath = Paths.get("library");
+    private int generateId() {
+        try (BufferedReader okuyucu = new BufferedReader(new FileReader("kullanici_bilgileri.txt"))) {
+            // Dosyadaki satır sayısını hesapla
+            long userCount = okuyucu.lines().count();
+            idCounter = (int) userCount;
+        } catch (IOException e) {
+            System.err.println("Dosya okuma hatası: " + e.getMessage());
+        }
+        return ++idCounter;
+    }
+    private void createUserLibraryFile(String kullaniciAdi) {
+        Path kutuphaneKlasorYolu = Paths.get("library");
 
-        // "library" klasörü yoksa oluştur
-        if (!libraryFolderPath.toFile().exists()) {
+        if (!kutuphaneKlasorYolu.toFile().exists()) {
             try {
-                Files.createDirectories(libraryFolderPath);
+                Files.createDirectories(kutuphaneKlasorYolu);
             } catch (IOException e) {
                 System.err.println("Kütüphane klasörü oluşturulurken bir hata oluştu: " + e.getMessage());
-                return; // Hata durumunda metodu sonlandır
+                return;
             }
         }
 
-        Path userLibraryPath = Paths.get("library", username + "_kutuphane.txt");
+        Path kullaniciKutuphaneYolu = Paths.get("library", kullaniciAdi + "_kutuphane.txt");
 
         try {
-            if (userLibraryPath.toFile().createNewFile()) {
-                System.out.println("Kullanıcı kütüphanesi dosyası oluşturuldu: " + userLibraryPath.toString());
+            if (kullaniciKutuphaneYolu.toFile().createNewFile()) {
+                System.out.println("Kullanıcı kütüphanesi dosyası oluşturuldu: " + kullaniciKutuphaneYolu.toString());
             } else {
                 System.out.println("Kullanıcı kütüphanesi dosyası zaten var veya oluşturulamadı.");
             }
@@ -211,13 +246,9 @@ public class RegisterPage {
         }
     }
 
-    private void displayResult(String message) {
-        clearResultLabel(); // Sonuç etiketini temizle
-        resultLabel.setText(message);
-    }
-
-    private void clearResultLabel() {
-        resultLabel.setText("");
+    private void sonucuGoster(String mesaj) {
+        sonucEtiketi.setText("");
+        sonucEtiketi.setText(mesaj);
     }
 
     public static void main(String[] args) {
