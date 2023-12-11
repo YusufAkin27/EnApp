@@ -1,6 +1,0 @@
-phone,telefon
-ev,house
-gözlük kutusu,glasses case
-perfume,parfüm
-kapı,door
-refrigerator,buzdolabı

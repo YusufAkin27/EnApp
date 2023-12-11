@@ -203,7 +203,7 @@ public class RegisterPage {
         Path dosyaYolu = Paths.get("kullanici_bilgileri.txt");
 
         try (BufferedWriter yazici = new BufferedWriter(new FileWriter(dosyaYolu.toFile(), true))) {
-            yazici.write(this.id + "/" + this.nameAndSurname + "/" + this.username + "/" + this.password + "/" + this.level + "/" + this.email+"/"+"null");
+            yazici.write(this.id + "/" + this.nameAndSurname + "/" + this.username + "/" + this.password + "/" + this.level + "/" + this.email+"/"+"2022-12-11 08:27:49");
             yazici.newLine();
             sonucuGoster("Kullanıcı bilgileri başarıyla kaydedildi.");
         } catch (IOException e) {
