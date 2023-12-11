@@ -1,0 +1,3 @@
+radio,radyo
+red,kırmızı
+yastık,pillow
