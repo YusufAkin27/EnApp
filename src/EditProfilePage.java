@@ -87,6 +87,7 @@ public class EditProfilePage {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
+
     private void updateUser() {
         String newNameAndSurname = nameAndSurnameField.getText();
         String newUsername = usernameField.getText();
@@ -98,6 +99,7 @@ public class EditProfilePage {
             JOptionPane.showMessageDialog(frame, "Geçersiz kullanıcı adı! Kullanıcı adı en az 4 karakter uzunluğunda olmalıdır ve sadece harf, rakam ve alt çizgi içerebilir.");
             return;
         }
+
 
         if (!isEmailValid(newEmail)) {
             JOptionPane.showMessageDialog(frame, "Geçersiz e-posta adresi!");
@@ -183,7 +185,8 @@ public class EditProfilePage {
                     .append(user.getUsername()).append("/")
                     .append(user.getPassword()).append("/")
                     .append(user.getLevel()).append("/")
-                    .append(user.getEmail());
+                    .append(user.getEmail()).append("/")
+                    .append(user.getDate());
 
             writer.write(updatedLine.toString());
             writer.newLine();
@@ -210,7 +213,6 @@ public class EditProfilePage {
 
     private boolean isUniqueTaken(String kullaniciAdi, String email) {
         Path dosyaYolu = Paths.get("kullanici_bilgileri.txt");
-
         try (BufferedReader okuyucu = new BufferedReader(new FileReader(dosyaYolu.toFile()))) {
             String satir;
             while ((satir = okuyucu.readLine()) != null) {
@@ -219,8 +221,12 @@ public class EditProfilePage {
                 if (kullaniciBilgisi.length > 1) {
                     String kullaniciAdiDosyadan = kullaniciBilgisi[2]; // Kullanıcı adı dosyada üçüncü sırada
                     String emailDosyadan = kullaniciBilgisi[5];
-                    if (kullaniciAdi.equals(kullaniciAdiDosyadan) || email.equals(emailDosyadan)) {
-                        return true; // Kullanıcı adı veya email daha önce kullanılmış
+
+                    // Check uniqueness only if the username or email is different from the current user's data
+                    if (!kullaniciAdiDosyadan.equals(user.getUsername()) || !emailDosyadan.equals(user.getEmail())) {
+                        if (kullaniciAdi.equals(kullaniciAdiDosyadan) || email.equals(emailDosyadan)) {
+                            return true; // Kullanıcı adı veya email daha önce kullanılmış
+                        }
                     }
                 } else {
                     System.err.println("Dosyada geçersiz bir satır bulundu: " + satir);

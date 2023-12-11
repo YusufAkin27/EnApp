@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class LoginPage {
 
@@ -159,6 +161,15 @@ public class LoginPage {
                         user.setPassword(userInfo[3]);
                         user.setLevel(userInfo[4]);
                         user.setEmail(userInfo[5]);
+
+                        // Parse the date from userInfo[6] and set it to the user object
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                            user.setDate(dateFormat.parse(userInfo[6]));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         return user;
                     }
                 }

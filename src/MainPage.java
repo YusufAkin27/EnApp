@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainPage {
 
@@ -117,40 +118,33 @@ public class MainPage {
 
                 if (id == userId) {
                     // Kullanıcının bilgilerini bulduk, şimdi zamanı alalım
-                    String lastClickTimeStr = userInfo[6];
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date lastClickTime = dateFormat.parse(lastClickTimeStr);
+                    String lastClickTimeStr = userInfo[6].trim(); // Trim to handle leading/trailing whitespaces
 
-                    // Şu anki zamanı alalım
-                    Date now = new Date();
+                    // Check if the date string is not blank
+                    if (!lastClickTimeStr.isEmpty()) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 
-                    // Bir gün sonrasındaki zamanı hesaplayalım
-                    long oneDayInMillis = 24 * 60 * 60 * 1000;
-                    Date oneDayAfter = new Date(lastClickTime.getTime() + oneDayInMillis);
+                        try {
+                            Date lastClickTime = dateFormat.parse(lastClickTimeStr);
 
-                    // Kalan süreyi hesaplayalım
-                    long remainingTimeMillis = oneDayAfter.getTime() - now.getTime();
-                    long remainingTimeSeconds = remainingTimeMillis / 1000;
-
-                    long hours = remainingTimeSeconds / 3600;
-                    long minutes = (remainingTimeSeconds % 3600) / 60;
-                    long seconds = remainingTimeSeconds % 60;
-
-                    if (remainingTimeMillis <= 0) {
-                        remainingTimeLabel.setText("QUIZ sistemi açıldı!");
-                        quizButton.setEnabled(true);
+                            // Rest of your code...
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            // Handle parsing exception
+                        }
                     } else {
-                        remainingTimeLabel.setText("QUIZ'e Kalan Süre: " + hours + " saat " + minutes + " dakika " + seconds + " saniye");
+                        System.err.println("Last click time is blank for user " + userId);
                     }
 
                     break; // Gerekli bilgiyi bulduktan sonra döngüden çık
                 }
             }
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 
     private JButton createStyledButton(String buttonText) {
@@ -181,6 +175,7 @@ public class MainPage {
         }
     }
 
+    // updateLastClickTime metodunun içinde
     private void updateLastClickTime(long userId) {
         File file = new File("kullanici_bilgileri.txt");
 
@@ -194,12 +189,16 @@ public class MainPage {
 
                 if (id == userId) {
                     // Kullanıcının bilgilerini güncelle, en son tıklama zamanını ekleyerek
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String updatedLine = userInfo[0] + "/" + userInfo[1] + "/" + userInfo[2] + "/" + userInfo[3] + "/" +
-                            userInfo[4] + "/" + userInfo[5] + "/" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            userInfo[4] + "/" + userInfo[5] + "/" + dateFormat.format(new Date());
 
                     // Güncellenmiş satırı dosyaya yaz
                     raf.seek(lastPosition);
                     raf.writeBytes(updatedLine);
+
+                    // QUIZ butonuna basıldığı tarihi user nesnesine setle
+                    user.setDate(new Date());
                     break;
                 }
 
@@ -209,6 +208,7 @@ public class MainPage {
             e.printStackTrace();
         }
     }
+
 
 
 
@@ -229,6 +229,7 @@ public class MainPage {
                         Date lastClickTime = dateFormat.parse(lastClickTimeStr);
                         Date now = new Date();
 
+                        user.setDate(now);
                         long elapsedTime = now.getTime() - lastClickTime.getTime();
                         long oneDayInMillis = 24 * 60 * 60 * 1000;
 

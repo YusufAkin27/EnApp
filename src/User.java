@@ -4,20 +4,26 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User {
-
-
     private long id;
-
     private String nameAndSurname;
     private String username;
     private String password;
     private List<Word> library;
     private String level;
     private String email;
+    private Date date;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public long getId() {
         return id;
