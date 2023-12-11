@@ -83,7 +83,7 @@ public class MainPage {
         remainingTimeLabel = new JLabel("Kalan Süre: 60 saniye");
         remainingTimeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         remainingTimeLabel.setForeground(Color.RED);
-        remainingTimeLabel.setBounds(500, 70, 300, 40);
+        remainingTimeLabel.setBounds(400, 170, 400, 40);
         panel.add(remainingTimeLabel);
 
         frame.add(panel);
@@ -140,7 +140,7 @@ public class MainPage {
                         remainingTimeLabel.setText("QUIZ sistemi açıldı!");
                         quizButton.setEnabled(true);
                     } else {
-                        remainingTimeLabel.setText("Kalan Süre: " + hours + " saat " + minutes + " dakika " + seconds + " saniye");
+                        remainingTimeLabel.setText("QUIZ'e Kalan Süre: " + hours + " saat " + minutes + " dakika " + seconds + " saniye");
                     }
 
                     break; // Gerekli bilgiyi bulduktan sonra döngüden çık
