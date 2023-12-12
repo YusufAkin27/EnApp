@@ -1,0 +1,50 @@
+pencil, kalem
+notebook, defter
+book, kitap
+backpack, sırt çantası
+pen, tükenmez kalem
+eraser, silgi
+ruler, cetvel
+desk, masa
+chair, sandalye
+highlighter, fosforlu kalem
+sharpener, kalemtraş
+scissors, makas
+glue, yapıştırıcı
+calculator, hesap makinesi
+folder, klasör
+pencil case, kalemlik
+lunchbox, öğle yemeği kutusu
+clipboard, yazı tahtası
+tape, bant
+paper, kağıt
+computer, bilgisayar
+headphones, kulaklık
+notebook paper, defter kağıdı
+calendar, takvim
+tablo, table
+marker, marker kalem
+highlighter, vurgu kalem
+notebook cover, defter kapağı
+pencil sharpener, kalemtraş makinesi
+school bag, okul çantası
+pencil pouch, kalem kutusu
+pencil grip, kalem tutma aparatı
+paperclip, kağıt klipsi
+stapler, zımba
+staples, zımba telleri
+whiteboard, beyaz tahta
+blackboard, siyah tahta
+chalk, tebeşir
+tape dispenser, bant kesici
+hole punch, delgeç
+glue stick, yapıştırıcı sopa
+water bottle, su şişesi
+lunch bag, öğle yemeği poşeti
+USB flash drive, USB bellek
+pencil holder, kalemlik
+dictionary, sözlük
+notebook binder, defter cilti
+protractor, açı ölçer
+compass, pusula
+highlighter tape, vurgu bantı

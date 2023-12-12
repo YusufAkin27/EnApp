@@ -1,4 +1,8 @@
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,7 +32,7 @@ public class TypesListPage {
         List<String> words = readWordsFromFile(fileName);
 
         // Kelimeleri JTable içinde göster
-        String[] columnNames = {"Türkçe", "English"};
+        String[] columnNames = {"English", "Türkçe"};
         String[][] data = new String[words.size()][2];
 
         for (int i = 0; i < words.size(); i++) {
@@ -38,8 +42,48 @@ public class TypesListPage {
         }
 
         JTable table = new JTable(data, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(table); // JScrollPane içinde JTable
         table.setFillsViewportHeight(true);
+
+        // Başlıkları özelleştir
+        JTableHeader header = table.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 18));
+        header.setBackground(new Color(52, 152, 219)); // Başlık arkaplan rengi
+        header.setForeground(Color.WHITE); // Başlık yazı rengi
+
+        // Kaydırma çubuğunu özelleştir
+        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(34, 49, 63); // Kaydırma çubuğu rengi
+                this.trackColor = new Color(44, 62, 80); // Kaydırma çubuğu yolu rengi
+            }
+
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return createZeroButton();
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return createZeroButton();
+            }
+
+            private JButton createZeroButton() {
+                JButton button = new JButton();
+                Dimension zeroDim = new Dimension(0, 0);
+                button.setPreferredSize(zeroDim);
+                button.setMinimumSize(zeroDim);
+                button.setMaximumSize(zeroDim);
+                return button;
+            }
+        });
+
+        // Hücre içeriğini ortalama ve font boyutunu arttır
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setFont(new Font("Arial", Font.PLAIN, 20));
+        table.setDefaultRenderer(Object.class, centerRenderer);
 
         panel.add(scrollPane, BorderLayout.CENTER);
 

@@ -1,0 +1,90 @@
+Türkiye, Turkey
+Amerika Birleşik Devletleri, United States
+Almanya, Germany
+Fransa, France
+İngiltere, United Kingdom
+İtalya, Italy
+İspanya, Spain
+Portekiz, Portugal
+Yunanistan, Greece
+Hindistan, India
+Çin, China
+Japonya, Japan
+Rusya, Russia
+Brezilya, Brazil
+Arjantin, Argentina
+Meksika, Mexico
+Kanada, Canada
+Avustralya, Australia
+Güney Afrika, South Africa
+Nijerya, Nigeria
+Mısır, Egypt
+Gana, Ghana
+Cezayir, Algeria
+Fas, Morocco
+Suudi Arabistan, Saudi Arabia
+Birleşik Arap Emirlikleri, United Arab Emirates
+Katar, Qatar
+Kuveyt, Kuwait
+Irak, Iraq
+İran, Iran
+Pakistan, Pakistan
+Endonezya, Indonesia
+Japonya, Japan
+Güney Kore, South Korea
+Kuzey Kore, North Korea
+Tayvan, Taiwan
+Vietnam, Vietnam
+Malezya, Malaysia
+Singapur, Singapore
+Tayland, Thailand
+Kazakistan, Kazakhstan
+Özbekistan, Uzbekistan
+Türkmenistan, Turkmenistan
+Afganistan, Afghanistan
+Pakistan, Pakistan
+Hindistan, India
+Bangladeş, Bangladesh
+Sri Lanka, Sri Lanka
+Nepal, Nepal
+Butan, Bhutan
+Myanmar, Myanmar
+Kamboçya, Cambodia
+Laos, Laos
+Filipinler, Philippines
+Avusturya, Austria
+Belçika, Belgium
+Hollanda, Netherlands
+İsviçre, Switzerland
+İsveç, Sweden
+Norveç, Norway
+Finlandiya, Finland
+Danimarka, Denmark
+Polonya, Poland
+Macaristan, Hungary
+Çek Cumhuriyeti, Czech Republic
+Slovakya, Slovakia
+Slovenya, Slovenia
+Hırvatistan, Croatia
+Bosna-Hersek, Bosnia and Herzegovina
+Sırbistan, Serbia
+Karadağ, Montenegro
+Kosova, Kosovo
+Kuzey Makedonya, North Macedonia
+Arnavutluk, Albania
+Bulgaristan, Bulgaria
+Yunanistan, Greece
+Romanya, Romania
+Moldova, Moldova
+Ukrayna, Ukraine
+Belarus, Belarus
+Litvanya, Lithuania
+Letonya, Latvia
+Estonya, Estonia
+Gürcistan, Georgia
+Ermenistan, Armenia
+Azerbaycan, Azerbaijan
+Kırgızistan, Kyrgyzstan
+Tacikistan, Tajikistan
+Özbekistan, Uzbekistan
+Turkmenistan, Turkmenistan

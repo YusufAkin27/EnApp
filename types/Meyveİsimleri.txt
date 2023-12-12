@@ -1,0 +1,54 @@
+Elma, Apple
+Muz, Banana
+Üzüm, Grape
+Portakal, Orange
+Çilek, Strawberry
+Karpuz, Watermelon
+Kiraz, Cherry
+Erik, Apricot
+Armut, Pear
+Şeftali, Peach
+Nar, Pomegranate
+Mango, Mango
+Ananas, Pineapple
+Avokado, Avocado
+Çilek, Raspberry
+Böğürtlen, Blackberry
+Erik, Plum
+Mandalina, Tangerine
+Kivi, Kiwi
+Limon, Lemon
+Üzüm, Grape
+Elma Armutu, Quince
+Ahududu, Raspberry
+Dut, Mulberry
+Kavun, Melon
+Hurma, Date
+Vişne, Sour Cherry
+Kokulu Erik, Nectarine
+Ceviz, Walnut
+Antep Fıstığı, Pistachio
+Hindistancevizi, Coconut
+Şekerpare, Sugar apple
+Kaktüs Meyvesi, Dragon fruit
+Guava, Guava
+Passiflora (Yer Çileği), Passion fruit
+Papağan Üzümü, Elderberry
+Kızılcık, Cranberry
+Frenk Üzümü, Gooseberry
+Kumkuat, Kumquat
+Bamya, Okra
+Anzer Balı, Heather honey
+Jujube, Jujube
+Pepino, Cucumber
+Çarkıfelek Meyvesi, Jackfruit
+Fesleğen, Basil
+Kişniş, Coriander
+Feijoa, Feijoa
+Goyave, Guava
+Ayva, Quince
+Küçük Hindistancevizi, Baby coconut
+Kivanoz, Horned melon
+İncir, Fig
+Magnolia Üzümü, Muscadine grape
+Yaban Mersini, Blueberry

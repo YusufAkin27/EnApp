@@ -15,10 +15,9 @@ public class TypesPage {
     private JPanel panel;
 
     private List<String> types = Arrays.asList(
-            "Ev Esyalari", "Okul Eşyaları", "Meyve İsimleri", "Hayvanlar", "Renkler",
-            "Yiyecekler", "Meslekler", "Taşıtlar", "Ülkeler", "Sporlar",
-            "Ünlü Şahsiyetler", "Film Karakterleri"
-            // İhtiyacınıza göre daha fazla tür ekleyebilirsiniz
+            "Ev Esyalari", "Okul Esyalari", "Meyve İsimleri", "Hayvanlar", "Renkler",
+            "Yiyecekler", "Meslekler", "Tasitlar", "Ulkeler", "Sporlar",
+            "Unlu Sahsiyetler", "Film Karakterleri"
     );
 
     public TypesPage(User user) {
@@ -100,7 +99,7 @@ public class TypesPage {
         List<String> words = readWordsFromFile(typeName);
 
         // Kelimeleri JTable içinde göster
-        String[] columnNames = {"Türkçe", "English"};
+        String[] columnNames = {"English", "Türkçe"};
         String[][] data = new String[words.size()][2];
 
         for (int i = 0; i < words.size(); i++) {
