@@ -61,6 +61,32 @@ public class A2Words {
         a2Words.put("doğru", "correct");
         a2Words.put("yavaş", "slow");
         a2Words.put("fast", "hızlı");
+        a2Words.put("festival", "festival");
+        a2Words.put("dancing", "dans");
+        a2Words.put("exercise", "egzersiz");
+        a2Words.put("hat", "şapka");
+        a2Words.put("dance", "dans etmek");
+        a2Words.put("vegetable", "sebze");
+        a2Words.put("river", "nehir");
+        a2Words.put("mountain", "dağ");
+        a2Words.put("ocean", "okyanus");
+        a2Words.put("lake", "göl");
+        a2Words.put("dessert", "tatlı");
+        a2Words.put("rainy", "yağmurlu");
+        a2Words.put("sunny", "güneşli");
+        a2Words.put("windy", "rüzgarlı");
+        a2Words.put("cloudy", "bulutlu");
+        a2Words.put("warm", "ılıman");
+        a2Words.put("cold", "soğuk");
+        a2Words.put("hot", "sıcak");
+        a2Words.put("freezing", "donmak");
+        a2Words.put("swim", "yüzmek");
+        a2Words.put("watch TV", "televizyon izlemek");
+        a2Words.put("listen to music", "müzik dinlemek");
+        a2Words.put("go shopping", "alışverişe gitmek");
+        a2Words.put("visit a museum", "bir müzeyi ziyaret etmek");
+        a2Words.put("play a game", "oyun oynamak");
+        a2Words.put("ride a bike", "bisiklet sürmek");
 
         return a2Words;
     }

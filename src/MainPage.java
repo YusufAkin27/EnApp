@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +18,8 @@ public class MainPage {
     private JButton dictionaryButton;
     private JButton quizButton;
     private JButton profileButton;
+    private JButton typesButton;
+
     private JButton logoutButton;
     private JLabel remainingTimeLabel;
 
@@ -83,15 +87,26 @@ public class MainPage {
         logoutButton.addActionListener(e -> showConfirmation("Çıkış yapmak istediğinize emin misiniz?"));
         panel.add(logoutButton);
 
-        remainingTimeLabel = new JLabel("Kalan Süre: 60 saniye");
+        remainingTimeLabel = new JLabel();
         remainingTimeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         remainingTimeLabel.setForeground(Color.RED);
         remainingTimeLabel.setBounds(400, 170, 400, 40);
         panel.add(remainingTimeLabel);
+        typesButton = createStyledButton("Türler");
+        typesButton.setBounds(50, 230, 200, 40);
+        typesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new TypesPage(user);
+            }
+        });
+        panel.add(typesButton);
 
         frame.add(panel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+
 
         Timer timer = new Timer(1000, e -> updateRemainingTime(user.getId()));
         timer.start();
