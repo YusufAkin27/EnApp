@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,6 +180,8 @@ public class EditProfilePage {
         Path filePath = Paths.get("kullanici_bilgileri.txt");
 
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.APPEND)) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             StringBuilder updatedLine = new StringBuilder();
             updatedLine.append(user.getId()).append("/")
                     .append(user.getNameAndSurname()).append("/")
@@ -186,7 +189,7 @@ public class EditProfilePage {
                     .append(user.getPassword()).append("/")
                     .append(user.getLevel()).append("/")
                     .append(user.getEmail()).append("/")
-                    .append(user.getDate());
+                    .append(dateFormat.format(user.getDate()));
 
             writer.write(updatedLine.toString());
             writer.newLine();
@@ -195,6 +198,7 @@ public class EditProfilePage {
             System.err.println("Dosya yazma hatası: " + e.getMessage());
         }
     }
+
 
     private void renameUserLibraryFile(String oldUsername, String newUsername) {
         File oldFile = new File("library", oldUsername + "_kutuphane.txt");

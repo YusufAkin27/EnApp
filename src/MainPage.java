@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -109,41 +111,65 @@ public class MainPage {
     }
 
     private void updateRemainingTime(long userId) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("kullanici_bilgileri.txt"))) {
+        // Kullanıcının bilgilerini güncelleyerek alalım
+        user = createUserObject(userId);
 
+        if (user != null) {
+            // Şu anki zamanı alalım
+            Date now = new Date();
+
+            // Bir gün sonrasındaki zamanı hesaplayalım
+            long oneDayInMillis = 24 * 60 * 60 * 1000;
+            Date oneDayAfter = new Date(user.getDate().getTime() + oneDayInMillis);
+
+            // Kalan süreyi hesaplayalım
+            long remainingTimeMillis = oneDayAfter.getTime() - now.getTime();
+            long remainingTimeSeconds = remainingTimeMillis / 1000;
+
+            long hours = remainingTimeSeconds / 3600;
+            long minutes = (remainingTimeSeconds % 3600) / 60;
+            long seconds = remainingTimeSeconds % 60;
+
+            if (remainingTimeMillis <= 0) {
+                remainingTimeLabel.setText("QUIZ sistemi açıldı!");
+                quizButton.setEnabled(true);
+            } else {
+                remainingTimeLabel.setText("QUIZ'e Kalan Süre: " + hours + " saat " + minutes + " dakika " + seconds + " saniye");
+            }
+        } else {
+            System.err.println("Kullanıcı bilgileri alınamadı.");
+        }
+    }
+
+    // Kullanıcı bilgilerini dosyadan okuyan fonksiyon
+    private User createUserObject(long userId) {
+        Path filePath = Paths.get("kullanici_bilgileri.txt");
+        User user = new User();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split("/");
                 int id = Integer.parseInt(userInfo[0]);
 
                 if (id == userId) {
-                    // Kullanıcının bilgilerini bulduk, şimdi zamanı alalım
-                    String lastClickTimeStr = userInfo[6].trim(); // Trim to handle leading/trailing whitespaces
-
-                    // Check if the date string is not blank
-                    if (!lastClickTimeStr.isEmpty()) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-
-                        try {
-                            Date lastClickTime = dateFormat.parse(lastClickTimeStr);
-
-                            // Rest of your code...
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            // Handle parsing exception
-                        }
-                    } else {
-                        System.err.println("Last click time is blank for user " + userId);
-                    }
-
-                    break; // Gerekli bilgiyi bulduktan sonra döngüden çık
+                    user.setId(Long.parseLong(userInfo[0]));
+                    user.setNameAndSurname(userInfo[1]);
+                    user.setUsername(userInfo[2]);
+                    user.setPassword(userInfo[3]);
+                    user.setLevel(userInfo[4]);
+                    user.setEmail(userInfo[5]);
+                    user.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(userInfo[6]));
+                    return user;
                 }
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | ParseException e) {
+            System.err.println("Dosya okuma hatası: " + e.getMessage());
         }
+
+        return null;
     }
+
 
 
 
