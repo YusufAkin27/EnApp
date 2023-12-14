@@ -18,7 +18,7 @@ public class MainPage {
     private JButton dictionaryButton;
     private JButton quizButton;
     private JButton profileButton;
-    private JButton typesButton;
+
 
     private JButton logoutButton;
     private JLabel remainingTimeLabel;
@@ -92,16 +92,7 @@ public class MainPage {
         remainingTimeLabel.setForeground(Color.RED);
         remainingTimeLabel.setBounds(400, 170, 400, 40);
         panel.add(remainingTimeLabel);
-        typesButton = createStyledButton("Türler");
-        typesButton.setBounds(50, 230, 200, 40);
-        typesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new TypesPage(user);
-            }
-        });
-        panel.add(typesButton);
+
 
         frame.add(panel);
         frame.setVisible(true);
