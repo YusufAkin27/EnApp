@@ -19,7 +19,7 @@ public class MainPage {
     private JButton quizButton;
     private JButton profileButton;
 
-
+    private JButton gamesButton;
     private JButton logoutButton;
     private JLabel remainingTimeLabel;
 
@@ -75,6 +75,14 @@ public class MainPage {
                 showMessage("Günlük tıklama limitine ulaşıldı. Yarın tekrar deneyin.");
             }
         });
+        gamesButton = createStyledButton("Oyunlar");  // Create Games button
+        gamesButton.setBounds(50, 230, 200, 40);
+        gamesButton.addActionListener(e -> {
+            frame.dispose();
+            new GamePage(user);
+        });
+        panel.add(gamesButton);
+
         panel.add(quizButton);
 
         profileButton = createRoundButton("Profilim");
