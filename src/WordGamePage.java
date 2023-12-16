@@ -20,6 +20,7 @@ public class WordGamePage {
     private List<JButton> letterButtons;
     private JButton exitButton;
     private JButton helpButton;
+    private JButton deleteButton;  // Harf silme butonu
     private int helpCount;
 
     private User user;
@@ -49,12 +50,16 @@ public class WordGamePage {
         helpButton = new JButton("Yardım Al");
         helpButton.addActionListener(e -> getHelp());
 
+        deleteButton = new JButton("Harf Sil");  // Harf silme butonu
+        deleteButton.addActionListener(e -> deleteLetter());
+
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
         frame.add(questionLabel);
         frame.add(panel);
         frame.add(exitButton);
         frame.add(helpButton);
+        frame.add(deleteButton);  // Harf silme butonu eklendi
 
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
@@ -64,7 +69,7 @@ public class WordGamePage {
 
     private void startGame() {
         correctAnswers = 0;
-        helpCount = 0;
+        helpCount = 3;
         showNextWord();
     }
 
@@ -131,6 +136,7 @@ public class WordGamePage {
         if (enteredWord.equals(correctWord)) {
             correctAnswers++;
             displayCorrectWord(correctWord);
+            helpCount = 3;  // Her doğru bilinen kelime sonrasında yardım hakkını sıfırla
         } else if (enteredLetters.size() == currentWordLetters.size()) {
             clearEnteredLetters();
             enableAllButtons();
@@ -169,13 +175,8 @@ public class WordGamePage {
     }
 
     private void getHelp() {
-        if (originalWordLetters != null && !originalWordLetters.isEmpty() && helpCount < 3) {
-            // Eğer yeni bir kelime başlıyorsa, yardım hakkını sıfırla
-            if (enteredLetters.isEmpty()) {
-                helpCount = 0;
-            }
-
-            helpCount++;
+        if (originalWordLetters != null && !originalWordLetters.isEmpty() && helpCount > 0) {
+            helpCount--;
 
             // Kullanıcının doğru bildiği harfleri ve girdiği harfleri birleştir
             List<String> knownLetters = new ArrayList<>(enteredLetters);
@@ -206,14 +207,28 @@ public class WordGamePage {
                     checkWord();
                 }
             }
-        } else if (helpCount == 3) {
+        } else if (helpCount == 0) {
             JOptionPane.showMessageDialog(frame, "Yardım almak için hakkınız kalmadı.", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void deleteLetter() {
+        if (!enteredLetters.isEmpty()) {
+            // En son eklenen harfi sil
+            String deletedLetter = enteredLetters.remove(enteredLetters.size() - 1);
+            displayEnteredLetters();
+
+            // Silinen harfin butonunu devre dışı bırak
+            for (JButton button : letterButtons) {
+                if (button.getText().equals(deletedLetter)) {
+                    button.setEnabled(true);
+                    return; // Bulunan harfin butonunu devre dışı bıraktıktan sonra metodu sonlandır
+                }
+            }
         }
     }
 
 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new WordGamePage(new User()));
-    }
+
 }
