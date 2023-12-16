@@ -6,6 +6,7 @@ public class Word {
         return wordEN;
     }
 
+    //ylnhhb
     public void setWordEN(String wordEN) {
         this.wordEN = wordEN;
     }
