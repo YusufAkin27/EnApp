@@ -1,3 +1,5 @@
+import level.GameWords;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,20 +7,26 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class WordGamePage {
 
     private JFrame frame;
     private JPanel panel;
     private JLabel questionLabel;
+    private List<String> originalWordLetters;
     private List<String> currentWordLetters;
     private List<String> enteredLetters;
     private List<JButton> letterButtons;
     private JButton exitButton;
+    private JButton helpButton;
+    private int helpCount;
 
     private User user;
 
     private int correctAnswers;
+
+    private Map<String, String> words = GameWords.getWords();
 
     public WordGamePage(User user) {
         this.user = user;
@@ -38,11 +46,15 @@ public class WordGamePage {
         exitButton.setForeground(Color.BLACK);
         exitButton.addActionListener(e -> exitGame());
 
+        helpButton = new JButton("Yardım Al");
+        helpButton.addActionListener(e -> getHelp());
+
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
         frame.add(questionLabel);
         frame.add(panel);
         frame.add(exitButton);
+        frame.add(helpButton);
 
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
@@ -52,26 +64,17 @@ public class WordGamePage {
 
     private void startGame() {
         correctAnswers = 0;
+        helpCount = 0;
         showNextWord();
     }
 
-    private void showNextWord() {
-        String word = "example";
-        currentWordLetters = shuffleLetters(word);
-        enteredLetters = new ArrayList<>();
-        displayLettersAsButtons();
-
-        // Soru etiketini sıfırla
-        questionLabel.setText("Kelime: ");
-    }
-
-    private List<String> shuffleLetters(String word) {
-        List<String> letters = new ArrayList<>();
+    private void shuffleLetters(String word) {
+        originalWordLetters = new ArrayList<>();
         for (char letter : word.toCharArray()) {
-            letters.add(String.valueOf(letter));
+            originalWordLetters.add(String.valueOf(letter));
         }
-        Collections.shuffle(letters);
-        return letters;
+        currentWordLetters = new ArrayList<>(originalWordLetters);
+        Collections.shuffle(currentWordLetters);
     }
 
     private void displayLettersAsButtons() {
@@ -90,36 +93,9 @@ public class WordGamePage {
         frame.repaint();
     }
 
-    private void checkWord() {
-        String enteredWord = String.join("", enteredLetters);
-        String correctWord = String.join("", currentWordLetters);
-
-        if (enteredWord.equals(correctWord)) {
-            correctAnswers++;
-            displayCorrectWord(correctWord);
-            clearEnteredLetters();
-            enableAllButtons();
-            // Kelime doğru bilindi, istediğiniz bir mesaj gösterebilirsiniz.
-            JOptionPane.showMessageDialog(frame, "Tebrikler, doğru bildiniz!", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
-        } else if (enteredLetters.size() == currentWordLetters.size()) {
-            // Yanlış kelime, butonları etkinleştir ve kullanıcıyı uyar
-            enableAllButtons();
-            // Yanlış kelime durumunda doğru kelime etiketini ve girilen harfleri temizle
-            clearCorrectWordLabel();
-            clearEnteredLetters();
-            JOptionPane.showMessageDialog(frame, "Yanlış kelime! Tekrar deneyin.", "Hata", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void displayCorrectWord(String word) {
-        JLabel correctWordLabel = new JLabel(word);
-        frame.add(correctWordLabel);
-        frame.revalidate();
-        frame.repaint();
-    }
-
     private void clearEnteredLetters() {
         enteredLetters.clear();
+        questionLabel.setText("Kelime: ");
         frame.revalidate();
         frame.repaint();
     }
@@ -128,17 +104,6 @@ public class WordGamePage {
         for (JButton button : letterButtons) {
             button.setEnabled(true);
         }
-    }
-
-    private void clearCorrectWordLabel() {
-        Component[] components = frame.getContentPane().getComponents();
-        for (Component component : components) {
-            if (component instanceof JLabel) {
-                frame.remove(component);
-            }
-        }
-        frame.revalidate();
-        frame.repaint();
     }
 
     private class LetterButtonListener implements ActionListener {
@@ -155,14 +120,98 @@ public class WordGamePage {
     }
 
     private void displayEnteredLetters() {
-        questionLabel.setText("Kelime: " + String.join("", enteredLetters));
+        String enteredText = String.join("", enteredLetters);
+        questionLabel.setText("Kelime: " + enteredText);
+    }
+
+    private void checkWord() {
+        String enteredWord = String.join("", enteredLetters).toLowerCase();
+        String correctWord = String.join("", originalWordLetters).toLowerCase();
+
+        if (enteredWord.equals(correctWord)) {
+            correctAnswers++;
+            displayCorrectWord(correctWord);
+        } else if (enteredLetters.size() == currentWordLetters.size()) {
+            clearEnteredLetters();
+            enableAllButtons();
+            JOptionPane.showMessageDialog(frame, "Yanlış kelime! Tekrar deneyin.", "Hata", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void showNextWord() {
+        clearCorrectWordLabel();
+        String word = getRandomWord();
+        shuffleLetters(word);
+        enteredLetters = new ArrayList<>();
+        displayLettersAsButtons();
+        questionLabel.setText("Kelime: ");
+    }
+
+    private void clearCorrectWordLabel() {
+        questionLabel.setText("Kelime: ");
+    }
+
+    private void displayCorrectWord(String word) {
+        JOptionPane.showMessageDialog(frame, "Tebrikler, doğru bildiniz! Kelime: " + words.get(word), "Bilgi", JOptionPane.INFORMATION_MESSAGE);
+        clearEnteredLetters();
+        clearCorrectWordLabel();
+        showNextWord();
+    }
+
+    private String getRandomWord() {
+        List<String> wordList = new ArrayList<>(words.keySet());
+        return wordList.get((int) (Math.random() * wordList.size()));
     }
 
     private void exitGame() {
-        user.updateUser(user);
         frame.dispose();
         new MainPage(user);
     }
+
+    private void getHelp() {
+        if (originalWordLetters != null && !originalWordLetters.isEmpty() && helpCount < 3) {
+            // Eğer yeni bir kelime başlıyorsa, yardım hakkını sıfırla
+            if (enteredLetters.isEmpty()) {
+                helpCount = 0;
+            }
+
+            helpCount++;
+
+            // Kullanıcının doğru bildiği harfleri ve girdiği harfleri birleştir
+            List<String> knownLetters = new ArrayList<>(enteredLetters);
+            knownLetters.retainAll(originalWordLetters);
+
+            // Eğer tüm harfler girilmişse yardım almasına gerek yok
+            if (knownLetters.size() < originalWordLetters.size()) {
+                // Doğru tahmin edilmemiş harfleri bul
+                List<String> remainingLetters = new ArrayList<>(originalWordLetters);
+                remainingLetters.removeAll(knownLetters);
+
+                // Rastgele bir doğru tahmin edilmemiş harf seç
+                String randomLetter = remainingLetters.get(0);  // İlk indeksi al
+
+                // Eğer seçilen harf daha önce girilmemişse, enteredLetters listesine ekle
+                if (!enteredLetters.contains(randomLetter)) {
+                    enteredLetters.add(randomLetter);
+
+                    // Butonları kontrol et, doğru harfi bulup kapat
+                    for (JButton button : letterButtons) {
+                        if (button.getText().equals(randomLetter)) {
+                            button.setEnabled(false);
+                            break;
+                        }
+                    }
+
+                    displayEnteredLetters();
+                    checkWord();
+                }
+            }
+        } else if (helpCount == 3) {
+            JOptionPane.showMessageDialog(frame, "Yardım almak için hakkınız kalmadı.", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new WordGamePage(new User()));
