@@ -6,6 +6,7 @@ public class Word {
         return wordEN;
     }
 
+
     public void setWordEN(String wordEN) {
         this.wordEN = wordEN;
     }
